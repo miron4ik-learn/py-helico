@@ -5,8 +5,9 @@ from utils import randbool, randcell, randneighbour
 # 2 – река
 # 3 – госпиталь
 # 4 – апгрейд-шоп
+# 5 – огонь
 
-CELL_TYPES = '🟩🌲🌊🏥🏦'
+CELL_TYPES = '🟩🌲🌊🏥🏦🔥'
 
 class Map:
   def __init__(self, width, height):
@@ -41,6 +42,22 @@ class Map:
     
     if self.cells[rx][ry] == 0:
       self.cells[rx][ry] = 1
+      
+  def add_fire(self):
+    rc = randcell(self.width, self.height)
+    rx, ry = rc[0], rc[1]
+    
+    if self.cells[rx][ry] == 1:
+      self.cells[rx][ry] = 5
+      
+  def update_fires(self):
+    for ri in range(self.height):
+      for ci in range(self.width):
+        if self.cells[ri][ci] == 5:
+          self.cells[ri][ci] = 0
+          
+    for i in range(5):
+      self.add_fire()
     
   def check_bounds(self, x, y):
     return not (x < 0 or y < 0 or x >= self.height or y >= self.width)
