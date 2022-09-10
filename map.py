@@ -34,6 +34,13 @@ class Map:
       for ci in range(self.width):
         if randbool(r, mxr):
           self.cells[ri][ci] = 1
+          
+  def generate_tree(self):
+    rc = randcell(self.width, self.height)
+    rx, ry = rc[0], rc[1]
+    
+    if self.cells[rx][ry] == 0:
+      self.cells[rx][ry] = 1
     
   def check_bounds(self, x, y):
     return not (x < 0 or y < 0 or x >= self.height or y >= self.width)
