@@ -30,13 +30,11 @@ class Map:
     self.generate_upgrade_shop()
     
   def generate_river(self, len):
-    rc = randcell(self.width, self.height)
-    rx, ry = rc[0], rc[1]
+    rx, ry = randcell(self.width, self.height)
     self.cells[rx][ry] = 2
     
     while len > 0:
-      nc = randneighbour(rx, ry)
-      nx, ny = nc[0], nc[1]
+      nx, ny = randneighbour(rx, ry)
       
       if self.check_bounds(nx, ny):        
         self.cells[nx][ny] = 2
@@ -50,15 +48,13 @@ class Map:
           self.cells[ri][ci] = 1
           
   def generate_tree(self):
-    rc = randcell(self.width, self.height)
-    rx, ry = rc[0], rc[1]
+    rx, ry = randcell(self.width, self.height)
     
     if self.cells[rx][ry] == 0:
       self.cells[rx][ry] = 1
       
   def add_fire(self):
-    rc = randcell(self.width, self.height)
-    rx, ry = rc[0], rc[1]
+    rx, ry = randcell(self.width, self.height)
     
     if self.cells[rx][ry] == 1:
       self.cells[rx][ry] = 5
@@ -73,8 +69,7 @@ class Map:
       self.add_fire()
       
   def generate_upgrade_shop(self):
-    rc = randcell(self.width, self.height)
-    rx, ry = rc[0], rc[1]
+    rx, ry = randcell(self.width, self.height)
     self.cells[rx][ry] = 4
       
   def process_helico(self):
