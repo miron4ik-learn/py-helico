@@ -1,5 +1,8 @@
 import os
 import time
+import json
+
+from pynput import keyboard
 
 from map import Map
 from clouds import Clouds
@@ -17,6 +20,40 @@ clouds = Clouds(MAP_W, MAP_H)
 map = Map(MAP_W, MAP_H, helico, clouds)
 
 tick = 1
+  
+def save():
+  data = {
+    'helicopter': helico.export_data(),
+    'clouds': clouds.export_data(),
+    'map': map.export_data(),
+    'tick': tick,
+  }
+  
+  with open('level.json', 'w') as lvl:
+    json.dump(data, lvl)
+  
+def recovery():
+  with open('level.json', 'r') as lvl:
+    data = json.load(lvl)
+    
+    global tick
+    tick = data['tick'] or 1
+    
+    helico.import_data(data['helicopter'])
+    clouds.import_data(data['clouds'])
+    map.import_data(data['map'])
+
+# f – сохранение, g – восстановление
+KEYS = { 'f': save, 'g': recovery }
+
+def on_release(key):
+  char = key.char.lower()
+  if char in KEYS.keys():
+    KEYS[char]()
+
+listener = keyboard.Listener(on_release=on_release)
+listener.start()
+
 while True:
   os.system('cls')
   print('TICK', tick)

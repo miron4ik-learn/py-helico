@@ -146,3 +146,11 @@ class Map:
           
       print('⬛️')
     print('⬛️' * (self.width + 2))
+    
+  def export_data(self):
+    return {
+      'cells': self.cells,
+    }
+    
+  def import_data(self, data):
+    self.cells = data['cells'] or [ [ 0 for i in range(self.width) ] for j in range(self.height) ]
