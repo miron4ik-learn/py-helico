@@ -14,11 +14,12 @@ UPGRADE_COST = 500
 LIFE_COST = 1000
 
 class Map:
-  def __init__(self, width, height, helico):
+  def __init__(self, width, height, helico, clouds):
     self.width = width
     self.height = height
 
     self.helico = helico
+    self.clouds = clouds
     
     self.cells = [ [ 0 for i in range(width) ] for j in range(height) ]
     
@@ -104,8 +105,19 @@ class Map:
         
     elif cell == 3:
       if self.helico.score >= LIFE_COST:
-        self.helico.lifes += 1
+        self.helico.lives += 50
         self.helico.score -= LIFE_COST
+      
+  def process_clouds(self):
+    hx = self.helico.x
+    hy = self.helico.y
+    cloud = self.clouds.cells[hx][hy]
+    
+    if cloud == 2:
+      self.helico.lives -= 1
+      
+      if self.helico.lives <= 0:
+        self.helico.gameover()
     
   def check_bounds(self, x, y):
     return not (x < 0 or y < 0 or x >= self.height or y >= self.width)
@@ -119,7 +131,12 @@ class Map:
       for ci in range(self.width):
         cell = self.cells[ri][ci]
         
-        if(self.helico.x == ri and self.helico.y == ci):
+        if self.clouds.cells[ri][ci] == 1:
+          print('⛅️', end='')
+        elif self.clouds.cells[ri][ci] == 2:
+          print('☔️', end='')
+        
+        elif(self.helico.x == ri and self.helico.y == ci):
           print('🚁', end='')
         
         elif cell >= 0 and cell < len(CELL_TYPES):

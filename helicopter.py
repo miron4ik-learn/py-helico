@@ -1,3 +1,5 @@
+import os
+
 from pynput import keyboard
 from utils import randcell
 
@@ -16,7 +18,7 @@ class Helicopter:
     self.max_tank = 1
     
     self.score = 0
-    self.lifes = 2
+    self.lives = 100
     
     listener = keyboard.Listener(on_release=self.on_release)
     listener.start()
@@ -35,7 +37,18 @@ class Helicopter:
       dx, dy = MOVES[char]
       self.move(dx, dy)
       
+  def gameover(self):
+    os.system('cls')
+    
+    print('X' * 50)
+    print('X', ' ' * 48, sep='')
+    print('X', ' ' * 5, 'GAME OVER. YOUR SCORE IS ', self.score, sep='')
+    print('X', ' ' * 48, sep='')
+    print('X' * 50)
+    
+    exit(0)
+      
   def print_menu(self):
     print('💦 ', self.tank, '/', self.max_tank, sep='', end = ' | ')
     print('🏆 ', self.score, sep='', end=' | ')
-    print('🧡 ', self.lifes, sep='')
+    print('🧡 ', self.lives, sep='')
