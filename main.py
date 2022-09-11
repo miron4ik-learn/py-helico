@@ -22,9 +22,12 @@ map.print_map()
 tick = 1
 while True:
   os.system('cls')
-  
   print('TICK', tick)
+  
+  helico.print_menu()
   map.print_map()
+  
+  map.process_helico()
   
   tick += 1
   time.sleep(TICK_SLEEP)

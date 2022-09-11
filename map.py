@@ -60,6 +60,19 @@ class Map:
           
     for i in range(5):
       self.add_fire()
+      
+  def process_helico(self):
+    hx = self.helico.x
+    hy = self.helico.y
+    cell = self.cells[hx][hy]
+    
+    if cell == 2:
+      self.helico.tank = self.helico.max_tank
+      
+    elif cell == 5:
+      if self.helico.tank > 0:
+        self.helico.tank -= 1
+        self.cells[hx][hy] = 1
     
   def check_bounds(self, x, y):
     return not (x < 0 or y < 0 or x >= self.height or y >= self.width)

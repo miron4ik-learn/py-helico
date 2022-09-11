@@ -34,3 +34,6 @@ class Helicopter:
       dx = self.MOVES[char][0]
       dy = self.MOVES[char][1]
       self.move(dx, dy)
+      
+  def print_menu(self):
+    print('💦 ', self.tank, '/', self.max_tank, sep='')
