@@ -1,6 +1,8 @@
 import os
 import time
+
 from map import Map
+from helicopter import Helicopter as Helico
 
 MAP_W, MAP_H = 20, 10
 
@@ -8,7 +10,9 @@ TICK_SLEEP = 0.05
 TREE_UPDATE = 50
 FIRE_UPDATE = 100
 
-map = Map(MAP_W, MAP_H)
+helico = Helico(MAP_W, MAP_H)
+map = Map(MAP_W, MAP_H, helico)
+
 map.generate_forest(3, 10)
 map.generate_river(10)
 map.generate_river(10)

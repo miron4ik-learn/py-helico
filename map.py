@@ -10,9 +10,11 @@ from utils import randbool, randcell, randneighbour
 CELL_TYPES = '🟩🌲🌊🏥🏦🔥'
 
 class Map:
-  def __init__(self, width, height):
+  def __init__(self, width, height, helico):
     self.width = width
     self.height = height
+    
+    self.helico = helico
     
     self.cells = [ [ 0 for i in range(width) ] for j in range(height) ]
     
@@ -65,11 +67,16 @@ class Map:
   def print_map(self):
     print('⬛️' * (self.width + 2))
     
-    for row in self.cells:
+    for ri in range(self.height):
       print('⬛️', end='')
       
-      for cell in row:
-        if cell >= 0 and cell < len(CELL_TYPES):
+      for ci in range(self.width):
+        cell = self.cells[ri][ci]
+        
+        if(self.helico.x == ri and self.helico.y == ci):
+          print('🚁', end='')
+        
+        elif cell >= 0 and cell < len(CELL_TYPES):
           print(CELL_TYPES[cell], end='')
         else:
           print(CELL_TYPES[0], end='')
