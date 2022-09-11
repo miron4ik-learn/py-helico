@@ -16,6 +16,7 @@ class Helicopter:
     self.max_tank = 1
     
     self.score = 0
+    self.lifes = 2
     
     listener = keyboard.Listener(on_release=self.on_release)
     listener.start()
@@ -36,4 +37,5 @@ class Helicopter:
       
   def print_menu(self):
     print('💦 ', self.tank, '/', self.max_tank, sep='', end = ' | ')
-    print('🏆 ', self.score, sep='')
+    print('🏆 ', self.score, sep='', end=' | ')
+    print('🧡 ', self.lifes, sep='')
