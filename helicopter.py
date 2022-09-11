@@ -20,6 +20,8 @@ class Helicopter:
     self.tank = 0
     self.max_tank = 1
     
+    self.score = 0
+    
   def move(self, dx, dy):
     nx = dx + self.x
     ny = dy + self.y
@@ -36,4 +38,5 @@ class Helicopter:
       self.move(dx, dy)
       
   def print_menu(self):
-    print('💦 ', self.tank, '/', self.max_tank, sep='')
+    print('💦 ', self.tank, '/', self.max_tank, sep='', end = ' | ')
+    print('🏆 ', self.score, sep='')

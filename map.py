@@ -8,15 +8,26 @@ from utils import randbool, randcell, randneighbour
 # 5 – огонь
 
 CELL_TYPES = '🟩🌲🌊🏥🏦🔥'
+TREE_BONUS = 100
+UPGRADE_COST = 500
 
 class Map:
   def __init__(self, width, height, helico):
     self.width = width
     self.height = height
-    
+
     self.helico = helico
     
     self.cells = [ [ 0 for i in range(width) ] for j in range(height) ]
+    
+    self.generate_map()
+    
+  def generate_map(self):
+    self.generate_forest(3, 10)
+    self.generate_river(10)
+    self.generate_river(10)
+    self.generate_river(10)
+    self.generate_upgrade_shop()
     
   def generate_river(self, len):
     rc = randcell(self.width, self.height)
@@ -58,8 +69,13 @@ class Map:
         if self.cells[ri][ci] == 5:
           self.cells[ri][ci] = 0
           
-    for i in range(5):
+    for i in range(10):
       self.add_fire()
+      
+  def generate_upgrade_shop(self):
+    rc = randcell(self.width, self.height)
+    rx, ry = rc[0], rc[1]
+    self.cells[rx][ry] = 4
       
   def process_helico(self):
     hx = self.helico.x
@@ -72,7 +88,13 @@ class Map:
     elif cell == 5:
       if self.helico.tank > 0:
         self.helico.tank -= 1
+        self.helico.score += TREE_BONUS
         self.cells[hx][hy] = 1
+        
+    elif cell == 4:
+      if self.helico.score >= UPGRADE_COST:
+        self.helico.max_tank += 1
+        self.helico.score -= UPGRADE_COST
     
   def check_bounds(self, x, y):
     return not (x < 0 or y < 0 or x >= self.height or y >= self.width)

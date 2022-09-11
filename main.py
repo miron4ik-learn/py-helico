@@ -13,12 +13,6 @@ FIRE_UPDATE = 100
 helico = Helico(MAP_W, MAP_H)
 map = Map(MAP_W, MAP_H, helico)
 
-map.generate_forest(3, 10)
-map.generate_river(10)
-map.generate_river(10)
-map.generate_river(10)
-map.print_map()
-
 tick = 1
 while True:
   os.system('cls')
